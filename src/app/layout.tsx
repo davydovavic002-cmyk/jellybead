@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { AppProvider } from "@/context/AppContext";
+import { Suspense } from "react";
+import { PortfolioLanguageBridge } from "@/components/PortfolioLanguageBridge";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,9 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <body className="antialiased">
-        <AppProvider>{children}</AppProvider>
+        <Suspense fallback={null}>
+          <PortfolioLanguageBridge>{children}</PortfolioLanguageBridge>
+        </Suspense>
       </body>
     </html>
   );

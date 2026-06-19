@@ -5,6 +5,7 @@ import {
   useContext,
   useReducer,
   useCallback,
+  useEffect,
   type ReactNode,
 } from "react";
 import type {
@@ -24,7 +25,7 @@ const initialCartState: CartState = {
 };
 
 const initialState: AppState = {
-  language: "ru",
+  language: "en",
   cart: initialCartState,
   wishlist: [],
   quickViewProduct: null,
@@ -150,12 +151,28 @@ interface AppContextValue {
 
 const AppContext = createContext<AppContextValue | null>(null);
 
-export function AppProvider({ children }: { children: ReactNode }) {
+interface AppProviderProps {
+  children: ReactNode;
+  externalLanguage?: Language;
+}
+
+export function AppProvider({ children, externalLanguage }: AppProviderProps) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  const setLanguage = useCallback((language: Language) => {
-    dispatch({ type: "SET_LANGUAGE", language });
-  }, []);
+  useEffect(() => {
+    if (externalLanguage) {
+      dispatch({ type: "SET_LANGUAGE", language: externalLanguage });
+    }
+  }, [externalLanguage]);
+
+  const setLanguage = useCallback(
+    (language: Language) => {
+      if (!externalLanguage) {
+        dispatch({ type: "SET_LANGUAGE", language });
+      }
+    },
+    [externalLanguage],
+  );
 
   const addToast = useCallback((message: string, type: Toast["type"] = "success") => {
     const id = `${Date.now()}-${Math.random()}`;
