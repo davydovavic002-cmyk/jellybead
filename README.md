@@ -24,12 +24,17 @@ npm install
 npm run dev
 ```
 
+> **Порт:** проект работает на **3333** (порты 3000 и 3001 заняты не будут — сервер жёстко привязан к `3333`).  
+> Убедитесь, что порт **3333** свободен перед запуском.
+
 Open [http://localhost:3333](http://localhost:3333).
 
 ## Scripts
 
-| Command       | Description          |
-|---------------|----------------------|
-| `npm run dev` | Start dev server     |
-| `npm run build` | Production build   |
-| `npm start`   | Start production     |
+| Command         | Description                              |
+|-----------------|------------------------------------------|
+| `npm run dev`   | Dev-сервер на **порту 3333**             |
+| `npm run build` | Production build                         |
+| `npm start`     | Production-сервер на **порту 3333**      |
+
+Или запустите двойным кликом `start.bat` — откроется браузер на `http://localhost:3333`.

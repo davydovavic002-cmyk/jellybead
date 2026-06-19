@@ -28,6 +28,7 @@ if not exist "node_modules" (
 
 echo.
 echo === Запуск JELLY BEAD на http://localhost:3333 ===
+echo === Требуется свободный порт 3333 ===
 echo.
 start "" "http://localhost:3333"
 call "%NPM%" run dev
