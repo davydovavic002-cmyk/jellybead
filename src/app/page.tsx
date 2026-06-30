@@ -59,7 +59,7 @@ export default function Home() {
   }, [category, search, sort, dict]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div id="app-root" className="relative min-h-screen overflow-hidden">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="neon-blob absolute -left-32 -top-32 h-96 w-96 rounded-full bg-pink-400/40" />
         <div
@@ -146,6 +146,11 @@ export default function Home() {
             JELLY BEAD © 2026
           </p>
         </footer>
+        <div
+          id="embed-height-sentinel"
+          aria-hidden="true"
+          style={{ height: 0, width: "100%" }}
+        />
       </div>
 
       <CartPanel />

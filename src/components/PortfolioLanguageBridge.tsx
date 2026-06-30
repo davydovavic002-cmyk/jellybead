@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AppProvider } from "@/context/AppContext";
+import { PortfolioEmbedBridge } from "@/components/PortfolioEmbedBridge";
 import type { Language } from "@/types";
 
 const PORTFOLIO_LANG_MESSAGE = "portfolio:set-language";
@@ -37,6 +38,7 @@ export function PortfolioLanguageBridge({ children }: PortfolioLanguageBridgePro
 
   return (
     <AppProvider externalLanguage={messageLanguage ?? urlLanguage}>
+      <PortfolioEmbedBridge />
       {children}
     </AppProvider>
   );
