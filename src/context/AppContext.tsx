@@ -153,11 +153,19 @@ const AppContext = createContext<AppContextValue | null>(null);
 
 interface AppProviderProps {
   children: ReactNode;
+  initialLanguage?: Language;
   externalLanguage?: Language;
 }
 
-export function AppProvider({ children, externalLanguage }: AppProviderProps) {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+export function AppProvider({
+  children,
+  initialLanguage,
+  externalLanguage,
+}: AppProviderProps) {
+  const [state, dispatch] = useReducer(appReducer, {
+    ...initialState,
+    language: initialLanguage ?? initialState.language,
+  });
 
   useEffect(() => {
     if (externalLanguage) {
@@ -165,14 +173,18 @@ export function AppProvider({ children, externalLanguage }: AppProviderProps) {
     }
   }, [externalLanguage]);
 
-  const setLanguage = useCallback(
-    (language: Language) => {
-      if (!externalLanguage) {
-        dispatch({ type: "SET_LANGUAGE", language });
-      }
-    },
-    [externalLanguage],
-  );
+  const setLanguage = useCallback((language: Language) => {
+    dispatch({ type: "SET_LANGUAGE", language });
+
+    if (
+      typeof document !== "undefined" &&
+      document.documentElement.getAttribute("data-embed") === "portfolio"
+    ) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", language);
+      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+  }, []);
 
   const addToast = useCallback((message: string, type: Toast["type"] = "success") => {
     const id = `${Date.now()}-${Math.random()}`;

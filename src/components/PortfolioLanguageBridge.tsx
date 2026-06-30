@@ -37,7 +37,7 @@ export function PortfolioLanguageBridge({ children }: PortfolioLanguageBridgePro
   }, []);
 
   return (
-    <AppProvider externalLanguage={messageLanguage ?? urlLanguage}>
+    <AppProvider initialLanguage={urlLanguage} externalLanguage={messageLanguage}>
       <PortfolioEmbedBridge />
       {children}
     </AppProvider>
